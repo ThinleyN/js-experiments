@@ -1,0 +1,49 @@
+.image-container {
+     height: 600px;
+     width: 1800px; 
+}
+
+.image-container img {
+    height: 600px;
+    width: 600px;
+    float: left
+}
+
+.x-scroll {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 600px;
+    height: 600px;
+    position: relative;
+}
+
+.left-arrow {
+    position: absolute;
+    left : 3px;
+    top : 240px;
+}
+
+.right-arrow {
+    position: absolute;
+    left : 484px;
+    top : 240px;
+}
+
+
+.carousel-indicators {
+    list-style: none;
+    width: 600px;
+    text-align: center;
+    padding: 0;
+    
+}
+
+.indicator {
+    border: 2px black solid;
+    border-radius: 50px;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    display: inline-block;
+}
+

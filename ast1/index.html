@@ -1,0 +1,41 @@
+<!DOCTYPE <!DOCTYPE html>
+ <html lang="en"> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title> Assignment 1 </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+        <div class="x-scroll">
+                <div class="image-container" id="carousel">
+                    <img src="img/image1.jpg" alt="image1">
+                    <img src="img/image2.jpg" alt="image2">
+                    <img src="img/image3.jpg" alt="image3">
+                </div>     
+        </div>
+        <ul class="carousel-indicators">
+            <a href="#" title="0">
+                    <li class="indicator" value="0" onclick="selectIndicator(event)"></li>
+            </a>
+            <a href="#" title="1">
+                    <li class="indicator" value="1" onclick="selectIndicator(event)"></li>
+            </a>
+            <a href="#" title="2">
+                    <li class="indicator" value="2" onclick="selectIndicator(event)"></li>
+            </a>
+            
+            
+        </ul>
+       <a href="#" title="previous" > 
+           <img src="img/arrow-left.png" class="left-arrow" onclick="left()" alt="previous"> 
+        </a> 
+        <a href="#" title="next">
+            <img src="img/arrow-right.png" class="right-arrow" onclick="right()" alt="next">
+        </a>
+        
+        <script src="js/index.js"></script>
+    </body>
+</html>
