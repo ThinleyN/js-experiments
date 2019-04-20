@@ -8,7 +8,7 @@ window.onload = function(){
     
     let c = canvas.getContext('2d');
     
-    var flag;
+    
     var gameover = false;
     var colorchanged = false;
     
@@ -17,8 +17,8 @@ window.onload = function(){
         this.bgPos = 0;
         this.bgSpeed = 10;
         this.bgWidth = 288;
-        this.bgImage = new Image();
-        this.bgImage.src = "./img/background-day.png";
+        this.bgImage = document.getElementById('background');
+        
        
     
         this.update = function(){
@@ -44,18 +44,42 @@ window.onload = function(){
     function Bird() {
         this.y = 300;
         this.x = 60;
+        this.sprites = [document.getElementById('birdup'),
+                        document.getElementById('birdmid'), 
+                        document.getElementById('birddown')
+                    ];
+        this.spriteWidth = 34;
+        this.spriteHeight = 24;
+        this.tracker = 0;
+        this.spriteIndex = 0;
         this.radius = 10;
         this.velocity = 0;
-        this.gravity = 0.5;
-        this.velocity = 0;
-        this.flap = 14;
+        this.gravity = 0.7;
+        this.flap = 13;
+
+        //KeyPress
+        window.addEventListener('keypress', (event) => {
+            if (event.keyCode == 13) {
+                this.velocity -= this.flap;
+                this.y += this.velocity;
+                
+
+                
+            }
+        });
     
     
         this.show = function(){
-            c.beginPath();
-            c.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
-            c.fillStyle = 'white';
-            c.fill();
+            //for flapping animation
+            this.tracker++;
+            if(this.tracker%15 === 0){
+                this.spriteIndex++;
+            }
+            if(this.spriteIndex === 2){
+                this.spriteIndex =0 ;
+            }
+        
+            c.drawImage(this.sprites[this.spriteIndex],this.x - this.spriteWidth/2,this.y - this.spriteHeight/2);
         }
         
         this.update = function(){
@@ -72,11 +96,6 @@ window.onload = function(){
                 this.velocity = 0;
             }
     
-            if(flag === 1){
-                this.velocity -= this.flap;
-                this.y += this.velocity;
-                flag =0;
-            }
         }
     }
     
@@ -145,13 +164,6 @@ window.onload = function(){
         pipes.push(new Pipe);
     },1000);
     
-    
-    //for key press
-    this.addEventListener('keypress', (event) => {
-        if (event.keyCode == 13) {
-            flag = 1;
-        }
-    });
     
     //Game Loop
     function animate(){
