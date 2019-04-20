@@ -85,7 +85,6 @@ function animate() {
         i.draw();
 
         i.move(circleArr);
-
     }
 
 }
