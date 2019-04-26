@@ -1,101 +1,104 @@
 var carousel = document.getElementById('carousel');
-var indicator = [] = document.getElementsByClassName('indicator');
+var indicator = ([] = document.getElementsByClassName('indicator'));
 
-console.log(indicator);
+const PICTURE_WIDTH = 600;
 
+function Images() {
+  this.imagearray = document
+    .getElementById('carousel')
+    .getElementsByTagName('img');
 
-var counter = 0;
-var speed = -10;
-var leftMargin = 0;
-var maxWidth = 0;
-var minWidth = -1200;
-var flag = 0;
-var select = 0;
+  this.counter = 0;
+  this.leftMargin = 0;
+  this.flag = 0;
+  this.select = 0;
+  this.speed = -25;
 
-function slide(){
-        leftMargin = leftMargin + speed ;
-        carousel.style.marginLeft = leftMargin;
-        counter+=speed;
-}
+  this.slide = function() {
+    this.leftMargin = this.leftMargin + this.speed;
+    carousel.style.marginLeft = this.leftMargin;
+    this.counter += this.speed;
+  };
 
-function reverse(){
-    speed = -speed;
-}
+  this.reverse = function() {
+    this.speed = -this.speed;
+  };
 
-function right(){
-    if(speed > 0){
-        speed = -speed ;
-    }else{
-        speed = speed;
+  this.checkForReverse = function() {
+    if (this.leftMargin <= MIN_WIDTH || this.leftMargin >= MAX_WIDTH) {
+      this.reverse();
+    }
+  };
+
+  this.arrowHide = function() {
+    if (this.leftMargin <= MIN_WIDTH) {
+      document.getElementById('rightarrow').classList.toggle('hide');
+      setTimeout(function() {
+        document.getElementById('rightarrow').classList.remove('hide');
+      }, 1500);
     }
 
-}
-
-function left(){
-    if(speed > 0){
-        speed = speed;
-    }else{
-        speed = -speed;
+    if (this.leftMargin >= MAX_WIDTH) {
+      document.getElementById('leftarrow').classList.toggle('hide');
+      setTimeout(function() {
+        document.getElementById('leftarrow').classList.remove('hide');
+      }, 1500);
     }
-
+  };
 }
 
-function selectIndicator(event){
-    select = event.target.value;
-    flag = 1;
+var images = new Images();
+
+const MAX_WIDTH = 0;
+const MIN_WIDTH = -(PICTURE_WIDTH * (images.imagearray.length - 1));
+
+carousel.style.width = PICTURE_WIDTH * images.imagearray.length;
+
+function slide() {
+  leftMargin = leftMargin + speed;
+  carousel.style.marginLeft = leftMargin;
+  counter += speed;
 }
 
+function right() {
+  if (images.speed > 0) {
+    images.speed = -images.speed;
+  } else {
+    images.speed = images.speed;
+  }
+}
 
-function animate(){
-    var move = window.requestAnimationFrame(animate);
+function left() {
+  if (images.speed > 0) {
+    images.speed = images.speed;
+  } else {
+    images.speed = -images.speed;
+  }
+}
 
-    slide();
+function animate() {
+  var move = window.requestAnimationFrame(animate);
 
-    if(leftMargin === minWidth || leftMargin === maxWidth || leftMargin <= minWidth || leftMargin >=maxWidth){
-        console.log('reverse');
-        reverse();
+  images.slide();
+
+  images.checkForReverse();
+
+  images.arrowHide();
+
+  if (images.counter % PICTURE_WIDTH === 0) {
+    for (i of indicator) {
+      i.style.backgroundColor = 'white';
     }
-
-    if(flag === 0) {
-        if(counter%600 === 0){
-            for(i of indicator){
-                i.style.backgroundColor = 'white';
-            }
-
-            console.log('flag00');
-            velocity = 1;
-            window.cancelAnimationFrame(move);
-            var a= leftMargin/600;
-            var pos = -a * 1;
-        
-            indicator[pos].style.backgroundColor = 'brown';
-    
-            counter=0;
-    
-            setTimeout(function(){
-                window.requestAnimationFrame(animate);
-            },3000);
-        }
-    } else {
-        if(counter === (-select*600)){
-            window.cancelAnimationFrame(move);
-            flag = 0;
-
-                for(i of indicator){
-                    i.style.backgroundColor = 'white';
-                }
-
-
-            indicator[select].style.backgroundColor = 'brown';
-
-            setTimeout(function(){
-                window.requestAnimationFrame(animate);
-            },3000);
-        }
-    } 
+    velocity = 1;
+    window.cancelAnimationFrame(move);
+    var number = images.leftMargin / PICTURE_WIDTH;
+    var pos = -number * 1;
+    indicator[pos].style.backgroundColor = 'brown';
+    counter = 0;
+    setTimeout(function() {
+      window.requestAnimationFrame(animate);
+    }, 1500);
+  }
 }
 
 animate();
-
-
-
